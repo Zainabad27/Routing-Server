@@ -1,7 +1,5 @@
+#pragma once
 #include <string>
-
-// A fixed-size Stack of the last N broadcast messages.
-// New clients receive these on join (replay feature).
 
 class MessageHistory {
 public:
@@ -16,7 +14,15 @@ public:
     int size() const;
 
 private:
-    std::string* data;
-    int top;
+    struct Node {
+        std::string data;
+        Node* next;
+        Node* prev;
+        explicit Node(const std::string& msg) : data(msg), next(nullptr), prev(nullptr) {}
+    };
+
+    Node* head;
+    Node* tail;
+    int currentSize;
     int capacity;
 };

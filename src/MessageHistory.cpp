@@ -1,70 +1,88 @@
 #include "../include/MessageHistory.h"
 
-MessageHistory::MessageHistory(int capacity) {
-    
-    this->capacity = capacity;
-    this->top = -1;
-    
-    // Dynamic array allocation (we created String* in .h file)
-    data = new std::string[capacity];
-}
-
+MessageHistory::MessageHistory(int capacity) : head(nullptr), tail(nullptr), currentSize(0), capacity(capacity) {}
 
 MessageHistory::~MessageHistory() {
-    delete[] data;
+    // traverse on every node and delete it
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
 }
 
 bool MessageHistory::isEmpty() const {
-    return (top == -1);
+    return currentSize == 0;
 }
 
 bool MessageHistory::isFull() const {
-    return (top == capacity - 1);
+    return currentSize == capacity;
 }
 
 /*
-Adds a new message to the top of the stack.
+Adds a new message to the tail (top of stack).
 
-If stack becomes full:
-oldest messages are shifted left,
-newest message inserted at top.
-means our 1st message gets lost 
+If full: deletes head (oldest), then append new to tail
 */
-
 void MessageHistory::push(const std::string& message) {
 
     if (isFull()) {
-        // Shift everything left (the 1st message will get lost)
-        for (int i = 0; i < capacity - 1; i++) {
-            data[i] = data[i + 1];
-        }
+        // deletin the head
+        Node* temp = head;
+        head = head->next;
 
-        // Insert newest at end
-        data[capacity - 1] = message;
-        return;
+        if (head != nullptr)
+            head->prev = nullptr;
+        else
+            tail = nullptr; // however this will never be reached
+
+        delete temp;
+        currentSize--;
     }
-    top++;
-    data[top] = message;
+
+    // new node at tail
+    Node* node = new Node(message);
+
+    if (tail == nullptr) {
+        head = tail = node;
+    } else {
+        node->prev = tail;
+        tail->next = node;
+        tail = node;
+    }
+
+    currentSize++;
 }
 
-
+/*
+Removes and returns the top (tail)
+Rewires tail to its previous
+*/
 std::string MessageHistory::pop() {
 
     if (isEmpty()) return "";
 
-    std::string removedMessage = data[top];
-    top--;
+    Node* removed = tail;
+    std::string removedMessage = removed->data;
+
+    tail = tail->prev;
+
+    if (tail != nullptr)
+        tail->next = nullptr;
+    else
+        head = nullptr; // list is now empty
+
+    delete removed;
+    currentSize--;
 
     return removedMessage;
 }
 
 std::string MessageHistory::peek() const {
-
-    if (isEmpty()) return "";    
-
-    return data[top];
+    if (isEmpty()) return "";
+    return tail->data;
 }
 
 int MessageHistory::size() const {
-    return top + 1;
+    return currentSize;
 }
