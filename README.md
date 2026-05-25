@@ -1,6 +1,6 @@
 # Multi Client Chat Server
 
-A multi-client TCP chat server built from scratch in C++17, developed as a 3rd semester Data Structures & Algorithms course project. The project combines a real-world Linux networking layer with custom-implemented data structures to create a functional group chat system.
+A multi-client TCP chat server built from scratch in C++17, developed as a 3rd semester Data Structures & Algorithms Lab project. The project combines a real-world Linux networking layer with custom-implemented data structures to create a functional group chat system.
 
 ---
 
