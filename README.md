@@ -88,8 +88,9 @@ Multi-Client-Chat-Server
 │   ├── ClientManager.cpp
 │   ├── MessageHistory.cpp
 │   ├── MessageQueue.cpp
-│   └── server.cpp
-└── main.cpp
+│   └── server.h
+├── main.cpp
+└── README.md
 
 ```
 
