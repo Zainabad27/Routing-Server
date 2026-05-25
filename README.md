@@ -73,6 +73,7 @@ Each client has their own personal message queue stored inside their hash table 
 ## File Structure
 
 ```
+Multi-Client-Chat-Server
 ├── .vscode/
 │   ├── c_cpp_properties.json
 │   ├── launch.json
@@ -114,10 +115,11 @@ sudo apt install g++ netcat
 Clone the repository and compile:
 
 ```bash
-git clone <your-repo-link>
-cd <repo-folder>
+git clone (https://github.com/muhammad-hasannn/Multi-Client-Chat-Server.git)
+cd Multi-Client-Chat-Server
+git checkout name-feature
 
-g++ -std=c++17 -o server main.cpp src/Server.cpp src/ClientManager.cpp src/MessageHistory.cpp src/MessageQueue.cpp -Iinclude
+g++ -std=c++17 -o server main.cpp src/server.cpp src/ClientManager.cpp src/MessageHistory.cpp src/MessageQueue.cpp -Iinclude
 ```
 
 ### Run the Server
@@ -185,7 +187,7 @@ Press `Ctrl + C` in the server terminal.
 
 | Name | Role | GitHub |
 |---|---|---|
-| Zain Ul Abad | Networking Layer | (https://github.com/Zainabad27) |
-| Muhammad Hasan | DSA Integration | (https://github.com/muhammad-hasannn) |
+| Zain Ul Abad | Networking Layer | [GitHub Profile](https://github.com/Zainabad27) |
+| Muhammad Hasan | DSA Integration | [GitHub Profile](https://github.com/muhammad-hasannn) |
 
 ---
