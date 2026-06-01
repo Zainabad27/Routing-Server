@@ -18,7 +18,7 @@ private:
         std::string data;
         Node* next;
         Node* prev;
-        explicit Node(const std::string& msg) : data(msg), next(nullptr), prev(nullptr) {}
+        explicit Node(const std::string& msg) : data(msg), next(nullptr), prev(nullptr) { }
     };
 
     Node* head;

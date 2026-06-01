@@ -4,7 +4,6 @@
 ClientManager::ClientManager(int initialCapacity){
     capacity = initialCapacity;
     currentSize = 0;
-
     table.resize(capacity);
 }
 
@@ -22,7 +21,6 @@ int ClientManager::findIndex(int fd) const {
     int start = index;
 
     while (table[index].occupied){
-
         if (!table[index].deleted && table[index].client.fd == fd) {
             return index;
         }
@@ -48,32 +46,29 @@ void ClientManager::rehash() {
     for (Entry& entry : oldTable) {
 
         if (entry.occupied && !entry.deleted) {
-            addClient(entry.client.fd, entry.client.ip);
+            addClient(entry.client.fd, entry.client.ip, entry.client.name);
         }
     }
 }
 
 /*---Actual Functions---*/
-void ClientManager::addClient(int fd, const std::string& ip){
+void ClientManager::addClient(int fd, const std::string& ip, const std::string& name){
 
-    // Rehash if load factor >= 0.7
-    if ((float)currentSize / capacity >= 0.7f) {
+    if ((float)currentSize / capacity >= 0.7f)
         rehash();
-    }
 
     int index = hashFunction(fd);
 
-    // Linear probing
-    while (table[index].occupied && !table[index].deleted){
+    while (table[index].occupied && !table[index].deleted)
         index = (index + 1) % capacity;
-    }
 
-    table[index].client.fd = fd;
-    table[index].client.ip = ip;
+    table[index].client.fd          = fd;
+    table[index].client.ip          = ip;
+    table[index].client.name        = name;          // store the name
     table[index].client.connectedAt = time(nullptr);
 
     table[index].occupied = true;
-    table[index].deleted = false;
+    table[index].deleted  = false;
 
     currentSize++;
 }
@@ -97,16 +92,12 @@ int ClientManager::size() const {
 
 Client* ClientManager::getClient(int fd){
     int index = findIndex(fd);
-
     if (index == -1) return nullptr;
-
     return &table[index].client;
 }
 
 MessageQueue* ClientManager::getQueue(int fd) {
     int index = findIndex(fd);
-
     if (index == -1) return nullptr;
-
     return &table[index].queue;
 }

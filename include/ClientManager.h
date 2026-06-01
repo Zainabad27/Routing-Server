@@ -11,7 +11,7 @@ public:
     ClientManager(int initialCapacity = 10);
     ~ClientManager();
 
-    void addClient(int fd, const std::string& ip);
+    void addClient(int fd, const std::string& ip, const std::string& name);
     void removeClient(int fd);
     bool exists(int fd) const;
     int size() const;
